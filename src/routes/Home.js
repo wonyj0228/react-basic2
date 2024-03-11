@@ -7,10 +7,11 @@ function Home() {
 
   // async : 비동기처리 함수. 함수에 async를 붙이면 promise 객체로 인식된다.
   const getMovies = async () => {
-    const data = await fetch(
-      'https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year'
-    );
-    const json = await data.json();
+    const json = await (
+      await fetch(
+        'https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year'
+      )
+    ).json();
     setMovies(json.data.movies);
     setLoading(false);
   };
@@ -18,8 +19,6 @@ function Home() {
   useEffect(() => {
     getMovies();
   }, []);
-
-  console.log(movies);
 
   return (
     <div>
